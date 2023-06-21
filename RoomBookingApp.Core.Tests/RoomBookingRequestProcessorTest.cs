@@ -28,5 +28,14 @@ namespace RoomBookingApp.Core
             response.Email.ShouldBe(request.Email);
             response.Date.ShouldBe(request.Date);
         }
+
+        [Fact]
+        public void Should_Throw_Null_Exception_For_Null_Request()
+        {
+            var processor = new RoomBookingRequestProcessor();
+
+            var exception = Should.Throw<ArgumentNullException>(() => processor.BookRoom(null));
+            exception.ParamName.ShouldBe("request");
+        }
     }
 }
