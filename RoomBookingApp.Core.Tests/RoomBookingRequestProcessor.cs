@@ -6,9 +6,13 @@
         {
         }
 
-        internal RoomBookingResponse BookRoom(RoomBookingRequest request)
-        {
-            throw new NotImplementedException();
-        }
+        public RoomBookingResponse BookRoom(RoomBookingRequest request) =>
+            new RoomBookingResponse
+            {
+                FullName = request.FullName,
+                Email = request.Email,
+                Date = request.Date,
+            };
+
     }
 }
