@@ -1,4 +1,6 @@
-﻿using Shouldly;
+﻿using RoomBookingApp.Core.Models;
+using RoomBookingApp.Core.Processors;
+using Shouldly;
 
 namespace RoomBookingApp.Core
 {

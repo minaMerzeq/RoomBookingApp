@@ -1,6 +1,8 @@
-﻿namespace RoomBookingApp.Core
+﻿using RoomBookingApp.Core.Models;
+
+namespace RoomBookingApp.Core.Processors
 {
-    internal class RoomBookingRequestProcessor
+    public class RoomBookingRequestProcessor
     {
         public RoomBookingRequestProcessor()
         {

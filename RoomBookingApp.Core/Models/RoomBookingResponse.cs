@@ -1,4 +1,4 @@
-﻿namespace RoomBookingApp.Core
+﻿namespace RoomBookingApp.Core.Models
 {
     public class RoomBookingResponse
     {
