@@ -11,6 +11,7 @@ namespace RoomBookingApp.Core
     {
         private readonly RoomBookingRequestProcessor _processor;
         private readonly RoomBookingRequest _request;
+        private readonly List<Room> _availableRooms;
         private readonly Mock<IBookingService> _bookingServiceMock;
 
         public RoomBookingRequestProcessorTest()
@@ -22,7 +23,12 @@ namespace RoomBookingApp.Core
                 Email = "test@gmail.com",
                 Date = DateTime.Now,
             };
+            _availableRooms = new List<Room> { new Room { Id = 1 } };
+
             _bookingServiceMock = new Mock<IBookingService>();
+            _bookingServiceMock.Setup(q => q.GetAvailableRooms(_request.Date))
+                .Returns(_availableRooms);
+
             _processor = new RoomBookingRequestProcessor(_bookingServiceMock.Object);
         }
 
@@ -62,14 +68,13 @@ namespace RoomBookingApp.Core
             savedBooking.FullName.ShouldBe(_request.FullName);
             savedBooking.Email.ShouldBe(_request.Email);
             savedBooking.Date.ShouldBe(_request.Date);
+            savedBooking.RoomId.ShouldBe(_availableRooms.First().Id);
         }
 
         [Fact]
         public void Should_Prevent_Booking_Room_If_No_Rooms_Available()
         {
-            List<Room> availableRooms = new List<Room>();
-            _bookingServiceMock.Setup(q => q.GetAvailableRooms(_request.Date))
-                .Returns(availableRooms);
+            _availableRooms.Clear();
 
             _processor.BookRoom(_request);
 
