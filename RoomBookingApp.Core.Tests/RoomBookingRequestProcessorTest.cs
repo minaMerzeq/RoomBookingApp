@@ -63,5 +63,18 @@ namespace RoomBookingApp.Core
             savedBooking.Email.ShouldBe(_request.Email);
             savedBooking.Date.ShouldBe(_request.Date);
         }
+
+        [Fact]
+        public void Should_Prevent_Booking_Room_If_No_Rooms_Available()
+        {
+            List<Room> availableRooms = new List<Room>();
+            _bookingServiceMock.Setup(q => q.GetAvailableRooms(_request.Date))
+                .Returns(availableRooms);
+
+            _processor.BookRoom(_request);
+
+            _bookingServiceMock.Verify(q => q.GetAvailableRooms(_request.Date), Times.Once);
+            _bookingServiceMock.Verify(q => q.Save(It.IsAny<RoomBooking>()), Times.Never);
+        }
     }
 }
